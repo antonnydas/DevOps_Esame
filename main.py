@@ -10,15 +10,15 @@ from tensorflow.keras.callbacks import EarlyStopping
 import os
 
 # SageMaker directories per l'input e l'output
-TRAINING_DATA_PATH = 's3://bucket-prova3/input/train.csv'
-MODEL_OUTPUT_PATH = 's3://bucket-prova3/output/titanic_model.h5'
+TRAINING_DATA_PATH = os.environ['SM_INPUT_DIR']
+MODEL_OUTPUT_PATH = os.environ['SM_MODEL_DIR']
 
 
 np.random.seed(42)
 tf.random.set_seed(42)
 
 # Load data
-data = pd.read_csv(TRAINING_DATA_PATH)
+data = pd.read_csv(TRAINING_DATA_PATH + "/data/training/train.csv")
 print("Data loaded successfully.")
 
 # data preprocessing 
@@ -75,5 +75,5 @@ print(f"Test loss: {loss:.4f}")
 print(f"Test accuracy: {accuracy:.4f}")
 
 # salvataggio del modello
-model.save(MODEL_OUTPUT_PATH)
+model.save(MODEL_OUTPUT_PATH + "/Titanic_2_la_vendetta.h5")
 print(f"Model saved to {MODEL_OUTPUT_PATH}")

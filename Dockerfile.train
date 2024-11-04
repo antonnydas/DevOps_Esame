@@ -1,9 +1,7 @@
 FROM 763104351884.dkr.ecr.us-east-1.amazonaws.com/tensorflow-training:2.12.0-cpu-py310
 
-ADD ./main.py /opt/ml/code/main.py
 ADD ./requirements.txt /opt/ml/code/requirements.txt
 RUN pip install -r /opt/ml/code/requirements.txt
-
+ADD ./main.py /opt/ml/code/main.py
 # Add the entry point to specify main.py as the starting point
 ENV SAGEMAKER_PROGRAM main.py
-ENTRYPOINT ["python3", "/opt/ml/code/main.py"]
