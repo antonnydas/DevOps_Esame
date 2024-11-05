@@ -1,5 +1,11 @@
-FROM 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-tensorflow-serving:1.12.0-cpu
+FROM 763104351884.dkr.ecr.us-east-1.amazonaws.com/tensorflow-inference:2.12.1-cpu
+
+ADD ./requirements.inference.txt /opt/ml/code/requirements.inference.txt
+RUN pip install -r /opt/ml/code/requirements.inference.txt
+ 
 
 ADD ./inference.py /opt/ml/code/inference.py
 
-ENV SAGEMAKER_PROGRAM inference.py
+
+ENV FLASK_APP=/opt/ml/code/inference.py
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]

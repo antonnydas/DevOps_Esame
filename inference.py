@@ -14,10 +14,10 @@ app = Flask(__name__)
 
 def doit(Pclass, Sex):
     MODEL_OUTPUT_PATH = os.environ['SM_MODEL_DIR']
-    print(f"la model dir è {MODEL_OUTPUT_PATH})
-    model = models.load_model(f"{MODEL_OUTPUT_PATH}/Titanic_2_la_vendetta.h5)
+    print(f"la model dir è {MODEL_OUTPUT_PATH}")
+    model = models.load_model(f"{MODEL_OUTPUT_PATH}/Titanic_2_la_vendetta.h5")
     predict_input = np.array([
-        [Pclass,Sex,0.125,0.5095,0.2165,0.1125,0.165,9]])s
+        [Pclass,Sex,0.125,0.5095,0.2165,0.1125,0.165,9]])
     predict_result = model.predict(predict_input)
 
     return json.dumps({"predict_result": predict_result.tolist()})
