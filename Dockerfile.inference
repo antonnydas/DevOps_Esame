@@ -1,0 +1,5 @@
+FROM 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-tensorflow-serving:1.12.0-cpu
+
+ADD ./inference.py /opt/ml/code/inference.py
+
+ENV SAGEMAKER_PROGRAM inference.py
