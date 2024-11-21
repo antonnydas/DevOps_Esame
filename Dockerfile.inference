@@ -1,11 +1,16 @@
 FROM 763104351884.dkr.ecr.us-east-1.amazonaws.com/tensorflow-inference:2.12.1-cpu
 
+# Install pip and AWS CLI
+RUN pip install --upgrade pip && \
+    pip install awscli
+
 ADD ./requirements.inference.txt /opt/ml/code/requirements.inference.txt
 RUN pip install -r /opt/ml/code/requirements.inference.txt
- 
 
 ADD ./inference.py /opt/ml/code/inference.py
 
-
+# Environment variable for S3 model location
 ENV FLASK_APP=/opt/ml/code/inference.py
+ENV SM_MODEL_DIR=s3://bucket-prova333/output/tensorflow-training-2024-11-21-16-04-55-448/output/model.tar.gz
+
 CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]
