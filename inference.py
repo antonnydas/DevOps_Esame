@@ -4,7 +4,7 @@ import boto3
 import tarfile
 import numpy as np
 from flask import Flask, request
-from keras import models
+import tensorflow as tf
 
 app = Flask(__name__)
 
@@ -33,9 +33,19 @@ def download_and_extract_model(remote_path, local_path):
         with tarfile.open(local_tar_file, "r:gz") as tar:
             tar.extractall(path=extracted_model_dir)
 
-    # Assuming the model is in 'model' directory as Titanic_2_la_vendetta.h5
-    model_file = os.path.join(extracted_model_dir, "Titanic_2_la_vendetta.h5")
+    model_file = os.path.join(extracted_model_dir, "titanic_2_la_vendetta.h5")
     return model_file
+
+def load_model():
+    """
+    Loads the model from the local directory.
+    """
+    model_path = os.getenv('MODEL_DIR', '/opt/ml/model')
+    model_file = os.path.join(model_path, "Titanic_2_la_vendetta.h5")
+    
+    model = tf.keras.models.load_model(model_file)  # This works for both SavedModel and .h5
+    
+    return model
 
 def doit(Pclass, Sex):
     # Define S3 path and local path for the model
@@ -46,7 +56,7 @@ def doit(Pclass, Sex):
     model_path = download_and_extract_model(MODEL_S3_PATH, LOCAL_MODEL_DIR)
 
     # Load the model
-    model = models.load_model(model_path)
+    model = load_model()
 
     # Prepare input and predict
     predict_input = np.array([[Pclass, Sex, 0.125, 0.5095, 0.2165, 0.1125, 0.165, 9]])

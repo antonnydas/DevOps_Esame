@@ -74,6 +74,9 @@ loss, accuracy = model.evaluate(X_test, y_test)
 print(f"Test loss: {loss:.4f}")
 print(f"Test accuracy: {accuracy:.4f}")
 
+# Assuming 'model' is your trained model
+model.save(MODEL_OUTPUT_PATH + "/Titanic_2_la_vendetta.h5", save_format="h5")
+
 # salvataggio del modello
-model.save(MODEL_OUTPUT_PATH + "/Titanic_2_la_vendetta.h5")
+#model.save(MODEL_OUTPUT_PATH + "/Titanic_2_la_vendetta.h5")
 print(f"Model saved to {MODEL_OUTPUT_PATH}")
