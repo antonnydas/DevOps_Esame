@@ -1,3 +1,6 @@
+
+
+
 runtime_client = boto3.client('sagemaker-runtime', region_name=aws_region)
 
 payload = {
@@ -6,7 +9,7 @@ payload = {
 }
 
 response = runtime_client.invoke_endpoint(
-    EndpointName='prismaelettrolitico',
+    EndpointName='santoagostino',
     ContentType='application/json',
     Body=json.dumps(payload)
 )

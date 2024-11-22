@@ -1,3 +1,8 @@
 tensorflow==2.18.0
 pandas==2.2.3
 scikit-learn==1.5.2
+
+
+JSON_IN_INGRESSO_PER_INFERENZA='{"Pclass": 0.5, "Sex": 0.3}'
+JSON_IN_INGRESSO_PER_INFERENZA_B64=$(echo -n $JSON_IN_INGRESSO_PER_INFERENZA | base64)
+echo $JSON_IN_INGRESSO_PER_INFERENZA_B64

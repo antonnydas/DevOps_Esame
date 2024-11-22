@@ -9,9 +9,9 @@ RUN pip install -r /opt/ml/code/requirements.inference.txt
 
 ADD ./inference.py /opt/ml/code/inference.py
 
-# Environment variable for S3 model location
+
 ENV FLASK_APP=/opt/ml/code/inference.py
 ENV SM_MODEL_DIR=s3://bucket-prova333/output/tensorflow-training-2024-11-21-16-04-55-448/output/
 
 
-CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]
+ENTRYPOINT ["python", "/opt/ml/code/inference.py", "serve"]
